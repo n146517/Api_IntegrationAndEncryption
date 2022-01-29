@@ -1,0 +1,19 @@
+ public async Task<List<CountryModel>> GetCountryList()
+        {
+                List<CountryModel> countryList = new List<CountryModel>();
+                using (var Client = new HttpClient())
+                {
+
+                Client.BaseAddress = new Uri("https://localhost:7011/api/User/GetStudent");
+                var response = await Client.GetAsync(Client.BaseAddress);
+                string apiResponse = await response.Content.ReadAsStringAsync();
+               
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var readTask = response.Content.ReadAsStringAsync().Result;
+                        countryList = JsonConvert.DeserializeObject<List<CountryModel>>(readTask);
+
+                    }
+                    return countryList;
+                }           
+        }
